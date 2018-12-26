@@ -1,0 +1,119 @@
+Load 	Addr 	/Load address of first variable
+	Store	Now	/Store this address as next pointer
+	Load	Num	/Get the total number of values
+	Store	Count	/Store in our counter
+loadN, 	Input		/Get number
+	StoreI	Now	/Store number at indirrect address
+	Load	Now	/Load index
+	Add 	One	/Increment index
+	Store	Now	/Store new index
+	Load	Count	/Load cout
+	Subt	One	/Decrement counter
+	Store	Count	/Store new counter
+	Skipcond 400	/Loop until counter = 0
+	Jump 	loadN
+
+
+SetAvg, Load	Addr 	/Get address of first number
+	Store	Now	/Save that address
+	Load	Num	/Get the total number of values
+	Store	Count	/Store this number in the counter
+LoopS,	Load	Sum
+	AddI	Now
+	Store	Sum
+	Load	Now
+	Add	One
+	Store	Now
+	Load	Count
+	Subt	One
+	Store	Count
+	Skipcond 400
+	Jump	LoopS
+	
+Divide,	Load	Sum
+	Subt	Num	/Subt sum by 10
+	Store 	Sum
+	Skipcond 000	/If sum is less than zero then division is done
+	Jump	Incr	/Jump to increment count
+
+	Load	Avg
+	Output
+	
+setMax,	Load	Addr
+	Store	Now
+	Load	Num
+	Store	Count
+	LoadI	Now 	/Set initial maximum to be the first number
+	Store	Max
+calcMax, LoadI	Now
+	Subt	Max	
+	Skipcond 000	/If Now-Max < 0 then Now < Max
+	Jump	newMax
+after,	Load	Now
+	Add	One
+	Store	Now
+	Load	Count
+	Subt	One
+	Store	Count
+	Skipcond 400
+	Jump	calcMax
+
+	Load	Max
+	Output
+	
+setMin,	Load	Addr
+	Store	Now
+	Load	Num
+	Store	Count
+	LoadI	Now 	/Set initial maximum to be the first number
+	Store	Min
+calcMin, LoadI	Now
+	Subt	Min	
+	Skipcond 800	/If Now-Max < 0 then Now < Max
+	Jump	newMin
+afterM,	Load	Now
+	Add	One
+	Store	Now
+	Load	Count
+	Subt	One
+	Store	Count
+	Skipcond 400
+	Jump	calcMin
+	
+	Load	Min
+	Output
+	Halt
+	
+newMax,	LoadI	Now
+	Store	Max
+	Jump	after
+
+newMin,	LoadI	Now
+	Store	Min
+	Jump	afterM
+Incr,	Load	Avg
+	Add	One
+	Store	Avg
+	Jump	Divide
+
+/Variables
+Addr,	HEX	61
+Count,	DEC	0
+Num,	DEC	10
+Now,	DEC	0
+One,	DEC	1
+Sum,	DEC	0
+Avg,	DEC	0
+Max,	DEC	0
+Min,	DEC	0
+/Values
+	DEC	0	/1
+	DEC	0	/2
+	DEC	0	/3
+	DEC	0	/4
+	DEC	0	/5
+	DEC	0	/6
+	DEC	0	/7
+	DEC	0	/8
+	DEC	0	/9
+	DEC	0	/10
